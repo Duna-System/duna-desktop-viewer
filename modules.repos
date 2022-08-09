@@ -1,0 +1,5 @@
+repositories:
+    duna-optimizer:
+        type: git
+        url: git@github.com:Marcus-D-Forte/duna-optimizer.git
+        version: main

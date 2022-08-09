@@ -1,0 +1,20 @@
+image_width: 1280
+image_height: 720
+camera_name: csi_cam_0
+camera_matrix:
+  rows: 3
+  cols: 3
+  data: [782.936341634921, 0, 636.6766513909603, 0, 780.934679074988, 328.299334000712, 0, 0, 1]
+distortion_model: plumb_bob
+distortion_coefficients:
+  rows: 1
+  cols: 5
+  data: [-0.3162125529420668, 0.08807703392449913, 0.0001259276735687766, 0.0009385248838667113, 0]
+rectification_matrix:
+  rows: 3
+  cols: 3
+  data: [1, 0, 0, 0, 1, 0, 0, 0, 1]
+projection_matrix:
+  rows: 3
+  cols: 4
+  data: [586.122314453125, 0, 638.8477694496105, 0, 0, 722.3973388671875, 323.031267074588, 0, 0, 0, 1, 0]
