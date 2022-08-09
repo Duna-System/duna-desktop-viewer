@@ -1,10 +1,11 @@
 # Duna-Viar Porject
 
-- This project goals visualize 3D Point Clouds and Camera Images for laser-camera extrinsics calibration.
+- This project offers a 3D Point Clouds visualization and Laser-Camera extrinsics calibration tool
 
 # Dependencies
 PCL
-duna-optimizator (https://github.com/Marcus-D-Forte/duna-optimizator.git)
+duna-optimizer (https://github.com/Marcus-D-Forte/duna-optimizer.git)
+Use `vcs import . < modules.repos`
 
 # build
 You can build duna project isolated from viar. Make sure you also have the dependencies installed. To download duna-optimizator, simply use
