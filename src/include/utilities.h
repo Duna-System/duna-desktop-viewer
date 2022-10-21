@@ -22,6 +22,7 @@ namespace utilities
 
     /* Image */
     void loadImageDialog(QWidget *window, QImage &cloud);
+		/* Loads image file `filename` to `image` */
     void loadImageFile(const std::string &filename, QImage &image);
     void loadImage(QString &filename, QImage &image);
 

@@ -75,5 +75,6 @@ void MainWindow::calibrationPressed()
 
 void MainWindow::closeEvent(QCloseEvent *)
 {
-    calibration_window->close();
+    if(calibration_window)
+        calibration_window->close();
 }

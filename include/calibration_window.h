@@ -55,7 +55,7 @@ protected:
 
     // Viewer for the resulting cloud
     std::unique_ptr<QWidget> gl_texture_viewer;
-    QGLViewer *gl_cast;
+    QGLViewer *gl_cast = nullptr;
     void resizeEvent(QResizeEvent *event) override;
     void closeEvent(QCloseEvent *event);
 

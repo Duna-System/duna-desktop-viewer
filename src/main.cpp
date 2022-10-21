@@ -36,7 +36,7 @@ static void printUsage()
 
 int main(int argc, char *argv[])
 {
-  QApplication a(argc, argv);
+  QApplication app(argc, argv);
 
   int opt;
   bool calibration_only = false;
@@ -104,6 +104,6 @@ int main(int argc, char *argv[])
 
   main_window->show();
 
-  return a.exec();
-  delete main_window;
+  return app.exec();
+  // delete main_window;
 }

@@ -25,7 +25,9 @@ class ImageViewer : public QWidget
 
 public:
     ImageViewer(QWidget *parent = nullptr);
+		/* Loads an image file */
     void loadFile(const QString &);
+
     void mousePressEvent(QMouseEvent *event) override;
     void paintEvent(QPaintEvent *event) override;
     void keyPressEvent(QKeyEvent *event) override;
