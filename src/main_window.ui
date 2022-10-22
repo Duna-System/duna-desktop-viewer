@@ -90,6 +90,7 @@
      <string>Tools</string>
     </property>
     <addaction name="actionCalibration"/>
+    <addaction name="actionTrena"/>
    </widget>
    <addaction name="menuArquivo"/>
    <addaction name="menuCalibration"/>
@@ -107,6 +108,14 @@
   <action name="actionCalibration">
    <property name="text">
     <string>Laser-Camera Calibration</string>
+   </property>
+  </action>
+  <action name="actionTrena">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Trena</string>
    </property>
   </action>
  </widget>

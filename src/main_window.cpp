@@ -6,6 +6,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->setupUi(this);
     connect(ui->actionOpenPointCloud, SIGNAL(triggered()), SLOT(selectFilePressed()));
     connect(ui->actionCalibration, SIGNAL(triggered()), SLOT(calibrationPressed()));
+    connect(ui->actionTrena, SIGNAL(triggered()), SLOT(trenaPressed()));
     // connect(ui->close, SIGNAL(triggered()), SLOT(closeAll()));
 
     cloud.reset(new pcl::PointCloud<PointT>);
@@ -71,6 +72,11 @@ void MainWindow::calibrationPressed()
     calibration_window.reset(new CalibrationWindow);
 
     calibration_window->show();
+}
+
+void MainWindow::trenaPressed()
+{
+    qDebug() << "Trena\n";
 }
 
 void MainWindow::closeEvent(QCloseEvent *)

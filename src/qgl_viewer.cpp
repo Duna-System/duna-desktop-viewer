@@ -480,19 +480,28 @@ void QGLViewer::mousePressEvent(QMouseEvent *event)
 
   if (modePicking && event->buttons() & Qt::LeftButton)
   {
+
+    if (!m_point_picker.hasCloud())
+    {
+      qDebug() << "Not point cloud is set!\n";
+      return;
+    }
+
     // int pointPickedIdx = pointPicking(event->x(), event->y(), getGLsize().width(), getGLsize().height(), m_camera->toMatrix(), m_cloud, 0.1f); // Cannot be too low
     utilities::Stopwatch timer;
     timer.tick();
     int pointPickedIdx = m_point_picker.pickPoint(event->x(), event->y(), getGLsize().width(), getGLsize().height(), m_camera->toMatrix());
     timer.tock("Point Picking");
-      
+
     if (pointPickedIdx > 0)
     {
       // Extremely important..
       makeCurrent();
       markPointPicked(pointPickedIdx);
       doneCurrent();
-    } else {
+    }
+    else
+    {
       qDebug() << "No point picked";
     }
   }
@@ -649,7 +658,7 @@ void QGLViewer::wheelEvent(QWheelEvent *event)
 
 void QGLViewer::markPointPicked(int pointPickedIdx, float pointSize)
 {
-  // change point picket in VBO
+  // change point picked in VBO
   m_pointsVbo.bind();
   GLPointVertexUColor pt_picked;
   m_pointsVbo.read(sizeof(GLPointVertexUColor) * pointPickedIdx, &pt_picked, sizeof(pt_picked));

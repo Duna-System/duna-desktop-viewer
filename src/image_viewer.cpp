@@ -127,5 +127,4 @@ void ImageViewer::setModePicking(bool modePicking_)
 void ImageViewer::toggleModePicking()
 {
     setModePicking(!m_modePicking);
-    
 }

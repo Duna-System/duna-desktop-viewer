@@ -61,6 +61,13 @@ public:
             m_hasOctree = false;
     }
 
+    inline bool hasCloud()
+    {
+        if(m_cloud)
+            return true;
+        return false;
+    }
+
     int pickPoint(int mouse_x, int mouse_y, int width, int height, const QMatrix4x4 &MVP, const float min_dist = 0.05f);
 
 private:

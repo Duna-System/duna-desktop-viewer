@@ -45,6 +45,7 @@ private:
 public Q_SLOTS:
     void selectFilePressed();
     void calibrationPressed();
+    void trenaPressed();
 };
 
 #endif
