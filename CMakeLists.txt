@@ -57,6 +57,7 @@ set(duna_src
 	src/image_rectification.cpp
 	src/cloud_texture.cpp
 	src/utilities.cpp
+	src/cloud_loader.cpp
 
 	# QT MOCs
 	include/calibration_window.h 

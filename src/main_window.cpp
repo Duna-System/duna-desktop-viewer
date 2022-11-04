@@ -8,9 +8,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->actionCalibration, SIGNAL(triggered()), SLOT(calibrationPressed()));
     connect(ui->actionTrena, SIGNAL(triggered()), SLOT(trenaPressed()));
     // connect(ui->close, SIGNAL(triggered()), SLOT(closeAll()));
-
-    cloud.reset(new pcl::PointCloud<PointT>);
-
     setAcceptDrops(true);
 }
 
@@ -42,9 +39,9 @@ void MainWindow::dropEvent(QDropEvent *e)
             qDebug() << "Dropped file:" << fileName;
             // TODO verify if is cloud or image
             std::cout << "loading...\n";
-            utilities::loadPointCloudFile(fileName.toStdString(), *cloud);
-            std::cout << "loaded " << cloud->size() << " points\n";
-            ui->GLviewer->setCloud(cloud);
+            m_loader.loadPointCloud(fileName.toStdString());
+            ui->GLviewer->setCloud(m_loader.createRGBCloud());
+             std::cout << "loaded!";
         }
     }
 
@@ -54,15 +51,14 @@ void MainWindow::dropEvent(QDropEvent *e)
 
 void MainWindow::setPointCloudFile(const std::string &filename)
 {
-    if (pcl::io::loadPCDFile(filename, *cloud) == 0)
-        ui->GLviewer->setCloud(cloud);
+    m_loader.loadPointCloud(filename);
+    ui->GLviewer->setCloud(m_loader.createRGBCloud());
 }
 
 void MainWindow::selectFilePressed()
 {
-    utilities::loadPointCloudDialog(this, *cloud);
-
-    ui->GLviewer->setCloud(cloud);
+    utilities::loadPointCloudDialog(this, m_loader);
+    ui->GLviewer->setCloud(m_loader.createRGBCloud());
 }
 
 void MainWindow::calibrationPressed()

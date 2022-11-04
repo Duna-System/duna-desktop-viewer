@@ -4,8 +4,6 @@
 /* Author : Marcus Forte
 # Update History
 * 22-04-2022 
-
-
 */
 
 // This method MAPS intensities to RGB colors
@@ -80,7 +78,7 @@ static uint8_t color_from_interval(const uint8_t intensity, const uint8_t min, c
 }
 
 // Assume intensity range [0 , 150]
-void Int2RGB(float intensity, uint8_t &r, uint8_t &g, uint8_t &b)
+static void Int2RGB(float intensity, uint8_t &r, uint8_t &g, uint8_t &b)
 {
     uint8_t intensity_i = (uint8_t) intensity;
     // std::cout << intensity << "<=>" << +intensity_i << std::endl;
@@ -98,4 +96,4 @@ void Int2RGB(float intensity, uint8_t &r, uint8_t &g, uint8_t &b)
     b = color_from_interval(intensity_i, b0,b1);
 }
 
-#endif
+#endif 

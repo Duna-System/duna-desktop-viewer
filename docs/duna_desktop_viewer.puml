@@ -1,0 +1,8 @@
+@startuml DunaViewer
+class CloudLoader 
+{
+    +loadPointCloud(string filename)
+    +convertToRGB()
+}
+
+@enduml

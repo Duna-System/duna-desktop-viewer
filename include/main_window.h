@@ -11,6 +11,7 @@
 #include <pcl/point_cloud.h>
 #include <pcl/point_types.h>
 #include "utilities.h"
+#include "cloud_loader.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -38,7 +39,7 @@ protected:
 
 private:
     Ui::MainWindow *ui;
-    pcl::PointCloud<PointT>::Ptr cloud;
+    CloudLoader m_loader;
 
     std::unique_ptr<CalibrationWindow> calibration_window;
 

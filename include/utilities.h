@@ -10,15 +10,12 @@
 #include <pcl/io/ply_io.h>
 
 #include <chrono>
+#include "cloud_loader.h"
 
 namespace utilities
 {
     /* Point Cloud */
-    template <typename PointT>
-    int loadPointCloudFile(const std::string &filename, pcl::PointCloud<PointT> &cloud);
-
-    template <typename PointT>
-    void loadPointCloudDialog(QWidget *window, pcl::PointCloud<PointT> &cloud);
+    void loadPointCloudDialog(QWidget *window, CloudLoader& loader);
 
     /* Image */
     void loadImageDialog(QWidget *window, QImage &cloud);

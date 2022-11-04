@@ -5,7 +5,6 @@
 
 #include <cmath>
 #include <iostream>
-#include <colormap.hpp> // int2rgb
 
 #include <utilities.h>
 
@@ -80,7 +79,7 @@ QGLViewer::QGLViewer(QWidget *parent)
   refreshRate->start(1000 / 60);
   setMouseTracking(false);
 
-  m_cloud.reset(new pcl::PointCloud<PointRGBT>);
+  m_cloud.reset(new pcl::PointCloud<PointT>);
 }
 
 QGLViewer::~QGLViewer()
@@ -115,39 +114,15 @@ QSize QGLViewer::sizeHint() const
 void QGLViewer::setGLsize(QSize size) { gl_size = size; }
 QSize QGLViewer::getGLsize() const { return gl_size; }
 
-void QGLViewer::setCloud(const pcl::PointCloud<pcl::PointXYZI>::ConstPtr &cloud_)
-{
 
-  m_cloud->resize(cloud_->size());
-
-  for (int i = 0; i < cloud_->size(); ++i)
-  {
-    m_cloud->points[i].x = cloud_->points[i].x;
-    m_cloud->points[i].y = cloud_->points[i].y;
-    m_cloud->points[i].z = cloud_->points[i].z;
-    float r, g, b;
-    Int2RGB_rviz(cloud_->points[i].intensity,
-                 m_cloud->points[i].r,
-                 m_cloud->points[i].g,
-                 m_cloud->points[i].b);
-  }
-
-  m_point_picker.setOctreeBuildThreshold(1000000);
-  m_point_picker.setCloud(m_cloud);
-
-  setupGL();
-}
-
-void QGLViewer::setCloud(const pcl::PointCloud<PointRGBT>::ConstPtr &cloud_)
+void QGLViewer::setCloud(const pcl::PointCloud<pcl::PointXYZRGB>::ConstPtr &cloud_)
 {
   m_cloud->resize(cloud_->size());
   pcl::copyPointCloud(*cloud_, *m_cloud);
-
   m_point_picker.setOctreeBuildThreshold(1000000);
   m_point_picker.setCloud(m_cloud);
 
   setupGL();
-  // update();
 }
 
 void QGLViewer::setGridConfig(const GridConfig &grid)

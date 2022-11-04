@@ -17,6 +17,7 @@
 #include "image_rectification.h"
 
 #include "cloud_texture.h"
+#include "cloud_loader.h"
 #include "qgl_viewer.h"
 
 QT_BEGIN_NAMESPACE
@@ -29,7 +30,7 @@ QT_END_NAMESPACE
 class CalibrationWindow : public QMainWindow
 {
     Q_OBJECT
-    using PointT = pcl::PointXYZI; // TODO generalize
+    using PointT = pcl::PointXYZRGB; // TODO generalize
 public:
     CalibrationWindow(QWidget *parent = nullptr);
     virtual ~CalibrationWindow();
@@ -45,6 +46,7 @@ private:
     void showMessage(const QString &text, bool print_debug = false);
 
 protected:
+    CloudLoader m_loader;
     pcl::PointCloud<PointT>::Ptr m_cloud;
     std::shared_ptr<QImage> m_image;               // input image
     std::shared_ptr<const QImage> m_texture_image; // texture map image

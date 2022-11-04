@@ -25,7 +25,6 @@ CalibrationWindow::CalibrationWindow(QWidget *parent)
     // Point & Pixel pick
     connect(ui->PixelPick, SIGNAL(clicked()), ui->imageViewer, SLOT(toggleModePicking()));
     connect(ui->PointPick, SIGNAL(clicked()), ui->GLviewer, SLOT(toggleModePicking()));
-    m_cloud.reset(new pcl::PointCloud<PointT>);
     setAcceptDrops(true);
 }
 
@@ -38,15 +37,8 @@ void CalibrationWindow::resizeEvent(QResizeEvent *event) {}
 
 void CalibrationWindow::setPointCloudFile(const std::string &filename)
 {
-    // TODO change to utility method
-    if (pcl::io::loadPCDFile(filename, *m_cloud) != 0)
-    {
-        std::cerr << "Unable to laod point cloud\n";
-    }
-    else
-    {
-        ui->GLviewer->setCloud(m_cloud);
-    }
+    if (m_loader.loadPointCloud(filename))
+        ui->GLviewer->setCloud(m_loader.createRGBCloud());
 }
 
 void CalibrationWindow::setImageFile(const std::string &filename)
@@ -66,8 +58,8 @@ void CalibrationWindow::selectFilePressedImg()
 
 void CalibrationWindow::selectFilePressed()
 {
-    utilities::loadPointCloudDialog(this, *m_cloud);
-    ui->GLviewer->setCloud(m_cloud);
+    utilities::loadPointCloudDialog(this, m_loader);
+    ui->GLviewer->setCloud(m_loader.createRGBCloud());
 }
 
 void CalibrationWindow::dragEnterEvent(QDragEnterEvent *e)
@@ -97,8 +89,8 @@ void CalibrationWindow::dropEvent(QDropEvent *e)
             qDebug() << "Dropped file:" << fileName;
             // TODO verify if is cloud or image
             std::cout << "loading...\n";
-            utilities::loadPointCloudFile(fileName.toStdString(), *m_cloud);
-            std::cout << "loaded " << m_cloud->size() << " points\n";
+            m_loader.loadPointCloud(fileName.toStdString());
+            m_cloud = m_loader.createRGBCloud();
             ui->GLviewer->setCloud(m_cloud);
         }
     }

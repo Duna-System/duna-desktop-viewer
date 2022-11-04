@@ -1,34 +1,7 @@
 #include "utilities.h"
-#include <pcl/cloud_iterator.h>
+
 namespace utilities
 {
-    // This is where we read and convert pointcloud files
-    template <typename PointT>
-    int loadPointCloudFile(const std::string &filename, pcl::PointCloud<PointT> &cloud)
-    {
-        if (filename.substr(filename.find_last_of(".") + 1) == "pcd")
-            return pcl::io::loadPCDFile(filename, cloud);
-        else if (filename.substr(filename.find_last_of(".") + 1) == "ply")
-        {
-            pcl::PCLPointCloud2::Ptr cloud_(new pcl::PCLPointCloud2);
-            int retval = pcl::io::loadPLYFile(filename, *cloud_);
-            if (retval)
-                return retval;
-            // Remap intensity field
-            for (auto &it : cloud_->fields)
-            {
-                if (it.name.find("intensity") != std::string::npos)
-                {
-                    it.name = "intensity";
-                    break;
-                }
-            }
-            pcl::fromPCLPointCloud2(*cloud_, cloud);
-            return retval;
-        }
-        // Error
-        return 1;
-    }
 
     // TODO avoid duplicate code
     void loadImageFile(const QString &filename, QImage &image)
@@ -45,8 +18,7 @@ namespace utilities
         image = reader.read();
     }
 
-    template <typename PointT>
-    void loadPointCloudDialog(QWidget *window, pcl::PointCloud<PointT> &cloud)
+    void loadPointCloudDialog(QWidget *window, CloudLoader& loader)
     {
         std::cout << "file pressed\n";
         QStringList pointcloud_files = QFileDialog::getOpenFileNames(
@@ -62,11 +34,7 @@ namespace utilities
         std::cout << "loading...\n";
         if (pointcloud_files.size())
         {
-            int retval = loadPointCloudFile(pointcloud_files.at(0).toStdString(), cloud);
-            if (retval)
-                std::cerr << "Point cloud load failure\n";
-            else
-                std::cout << "Loaded " << cloud.size() << " points\n";
+            loader.loadPointCloud(pointcloud_files.at(0).toStdString());
         }
     }
 
@@ -98,7 +66,4 @@ namespace utilities
         reader.setAutoTransform(true);
         image = reader.read();
     }
-
-    // Instantiate
-    template void loadPointCloudDialog<pcl::PointXYZI>(QWidget *window, pcl::PointCloud<pcl::PointXYZI> &cloud);
 }
