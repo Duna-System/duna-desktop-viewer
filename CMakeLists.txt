@@ -20,6 +20,7 @@ find_package(Qt5  COMPONENTS Core Gui OpenGL Widgets REQUIRED)
 find_package(PCL 1.10 CONFIG REQUIRED COMPONENTS common io search)
 find_package(OpenCV REQUIRED)
 find_package(yaml-cpp REQUIRED)
+find_package(duna_optimizer REQUIRED)
 
 add_definitions(${PCL_DEFINITIONS})
 
@@ -79,14 +80,10 @@ message (STATUS "Shaders will be installed in " ${ShadersAbsPath}) # TODO check 
 # default shader path
 add_definitions (-DSHADER_PATH="${ShadersAbsPath}/")
 
-# duna libraries as submodule
-set(BUILD_TESTS OFF CACHE INTERNAL "Optimizer lib tests" FORCE )
-add_subdirectory(duna-optimizer EXCLUDE_FROM_ALL)
-
 # Main executable
 add_executable(${PROJECT_NAME} ${duna_src} ${common_src} ) 
 target_include_directories(${PROJECT_NAME} PUBLIC duna-optimizer/include)
-target_link_libraries(${PROJECT_NAME} duna_optimizer Qt5::Core Qt5::Widgets Qt5::Gui Qt5::OpenGL ${PCL_LIBRARIES} ${YAML_CPP_LIBRARIES} ${OpenCV_LIBS} )
+target_link_libraries(${PROJECT_NAME} duna::duna_optimizer Qt5::Core Qt5::Widgets Qt5::Gui Qt5::OpenGL ${PCL_LIBRARIES} ${YAML_CPP_LIBRARIES} ${OpenCV_LIBS} )
 
 install (TARGETS
 ${PROJECT_NAME}

@@ -5,7 +5,7 @@
 #include <duna/levenberg_marquadt.h>
 #include <camera_calibration_model.h>
 
-#include <duna/logging.h>
+#include <duna/logger.h>
 #include <opencv2/opencv.hpp>
 
 CalibrationWindow::CalibrationWindow(QWidget *parent)
@@ -132,21 +132,16 @@ void CalibrationWindow::optimizePressed()
 
     std::cout << "Using camera model: " << CameraModel << std::endl;
 
-    // duna::CostFunctionNumericalDiff<CameraCalibrationModel,double,6,2> cost()
     Eigen::Matrix<double, 6, 1> x0;
     x0.setZero();
     std::shared_ptr<CameraCalibrationModel> camera_model;
-
     try
     {
         camera_model.reset(new CameraCalibrationModel(m_point_list, m_pixel_list));
-        camera_model->setCameraModel(CameraModel);
-        duna::CostFunctionNumericalDiff<CameraCalibrationModel, double, 6, 2> cost(camera_model.get(), m_pixel_list.size(), false);
-
         duna::LevenbergMarquadt<double, 6> optimizer;
-        optimizer.setCost(&cost);
+        auto cost = new duna::CostFunctionNumerical<double, 6, 2>(camera_model, m_pixel_list.size());
+        optimizer.addCost(cost);
         auto status = optimizer.minimize(x0.data());
-        DUNA_DEBUG_STREAM(x0 << std::endl);
         std::stringstream ss;
         ss << x0;
         showMessage("Optimization Result: \n" + QString::fromStdString(ss.str()), true);
